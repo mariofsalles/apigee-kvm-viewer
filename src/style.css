@@ -1,0 +1,222 @@
+/* Global styles */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.4;
+    color: #333;
+    margin-top: 5%;
+    /* adjust the value as desired */
+}
+
+h2 {
+    font-size: 36px;
+    font-weight: 700;
+    text-align: center;
+    margin-top: 24px;
+    margin-bottom: 16px;
+}
+
+/* List view styles */
+#list-view {
+    margin: 24px auto;
+    max-width: 1000px;
+    /* update the value to your desired width */
+
+}
+
+#list-view ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+#list-view li {
+    padding: 12px;
+    border-bottom: 1px solid #ddd;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#list-view li:hover {
+    background-color: #f2f2f2;
+}
+
+/* Content view styles */
+#content-view {
+    margin: 24px auto;
+    max-width: 1000px;
+}
+
+#content-view h3 {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 12px;
+}
+
+#content-view p {
+    font-size: 16px;
+    line-height: 1.6;
+    margin-bottom: 24px;
+}
+
+#return-btn {
+    display: inline-block;
+    /* added display property */
+    margin: 24px auto;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 2px;
+    background-color: #333;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 700;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    transition: opacity 0.3s ease;
+}
+
+#return-btn:hover {
+    opacity: 0.8;
+}
+
+#delete-kvm-btn,
+#new-kvm-btn {
+    display: inline;
+    margin: 24px auto;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 2px;
+    background-color: #333;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 700;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    transition: opacity 0.3s ease;
+}
+
+#add-entry-btn,
+#cancel-entry-btn,
+#new-entry-kvm-btn, 
+#delete-entry-kvm-btn {
+    display: inline-block;
+    /* added display property */
+    margin: 24px auto;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 2px;
+    background-color: #333;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 700;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    transition: opacity 0.3s ease;
+}
+
+#add-entry-btn,
+#cancel-entry-btn
+#return-btn,
+#new-entry-kvm-btn, #delete-entry-kvm-btn {    
+    display: inline-block;
+    /* change from "block" to "inline-block" */
+    margin: 24px 12px;
+    /* add margin to create space between the buttons */
+    padding: 12px 24px;
+    border: none;
+    border-radius: 2px;
+    background-color: #333;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 700;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    transition: opacity 0.3s ease;
+}
+
+#add-entry-btn,
+#cancel-entry-btn,
+#return-btn:hover,
+#new-entry-kvm-btn, 
+#delete-entry-kvm-btn:hover {
+    opacity: 0.8;
+}
+
+.popup {
+    display: none;
+    flex-direction: column;
+    position: fixed;
+    width: 35em;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px #ccc;
+    z-index: 9999;
+    text-align: center;
+}
+
+.popup label {
+    display: block;
+    margin-bottom: 10px;
+    text-align: left;
+}
+
+.popup textarea[type="text"] {
+    width: 100%;
+    height: 10em;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-bottom: 20px;
+    max-width: 48em;
+    text-align: start;
+    /* adjusted max-width */
+}
+
+.popup span {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    margin-top: 20px;
+}
+.popup-flex-item {
+    flex: 1;
+  }
+
+
+  #kvm-entries-table {
+    margin: 24px auto;
+    width: 100%;
+
+  }
+  
+  #kvm-entries-table th {
+    background-color: #333;
+    color: #fff;
+    padding: 12px;
+    text-align: left;
+  }
+  
+  #kvm-entries-table td {
+    border-bottom: 1px solid #ddd;
+    padding: 12px;
+  }
+  
+  #kvm-entries-table tr:hover {
+    background-color: #f2f2f2;
+  }
+  

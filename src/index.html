@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Apigee KVM Viewer</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body onload="renderHomePage()" class="body">
+    <!-------------------------- Placeholders --------------------------->
+    <h2>Apigee KVM GUI</h2>
+    <div id="list-view"></div>
+    <div id="content-view">
+      <div id="table-view"></div>
+    </div>
+
+    <!--------------------------- Templates ---------------------------->
+    <script id="list-template" type="text/x-handlebars-template">
+      {{#each items}}
+        <li data-item-id="{{id}}" name="{{name}}">{{name}}</li>
+      {{/each}}
+      <button id="new-kvm-btn" onclick="addKvm();">New KVM +</button>
+      <button id="delete-kvm-btn" onclick="deleteKvm();">Delete KVM</button>
+    </script>
+
+    <script id="table-template" type="text/x-handlebars-template">
+      <div>
+        <h3>{{kvm}}</h3>
+        <table id="kvm-entries-table">
+          <thead>
+            <tr>
+              <th>Key</th>
+              <th>Value</th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#each items}}
+              <tr>
+                <td>{{name}}</td>
+                <td>{{value}}</td>
+              </tr>
+            {{/each}}
+          </tbody>
+        </table>
+        <button id="new-entry-kvm-btn" onclick="addEntryKvmPopup();">Add Entry +</button>
+        <button id="delete-entry-kvm-btn" onclick="deleteEntry();">Delete Entries</button>
+        <button id="return-btn" onclick="returnHomePage();">Return</button>
+
+        <div class="popup" id="popup">
+          <label for="entry">Entry: </label>
+          <textarea
+            name="entry"
+            id="entries"
+            cols="40"
+            rows="5"
+            style="resize: none"
+          >[
+  { "name": "", "value": ""}
+]</textarea>
+          <span>
+            <button
+              name="add-entry-btn popup-flex-item"
+              id="add-entry-btn"
+            >Add +</button>
+            <button
+              name="cancel-entry-btn popup-flex-item"
+              id="cancel-entry-btn"
+              onclick="cancelEntryKvm();"
+            >Cancel</button>
+          </span>
+        </div>
+
+      </div>
+    </script>
+
+    <script id="content-template" type="text/x-handlebars-template">
+      <h3>{{title}}</h3>
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="/src/index.js"></script>
+
+  </body>
+</html>

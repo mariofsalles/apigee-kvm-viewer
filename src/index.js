@@ -1,23 +1,11 @@
-/**
- * You MUST set this values before using 
- */
-const ORG = ""
-const ENV = ""
-const TOKEN = ""
-
-// Instanciate axios
-const apigee = axios.create({
-    baseURL: "https://apigee.googleapis.com",
-    timeout: 2000,
-    headers: { Authorization: `Bearer ${TOKEN}` },
-});
+// Env variables
+var ORG, ENVS, CUR_ENV, TOKEN;
+var apigee = undefined;
 
 // KVM operations
 const listKvms = async () => {
     try {
-        const response = await apigee.get(
-            `/v1/organizations/${ORG}/environments/${ENV}/keyvaluemaps`
-        );
+        const response = await apigee.get(`/v1/organizations/${ORG}/environments/${CUR_ENV}/keyvaluemaps`);
         let kvms = response.data;
         kvms = kvms.map((kvm, i) => ({ id: i, name: kvm }));
 
@@ -32,7 +20,7 @@ const createKvm = async (kvm) => {
         console.log(kvm);
         const body = { name: kvm, encrypted: true };
         const response = await apigee.post(
-            `/v1/organizations/${ORG}/environments/${ENV}/keyvaluemaps/`,
+            `/v1/organizations/${ORG}/environments/${CUR_ENV}/keyvaluemaps/`,
             body
         );
         window.location.href = window.location.href;
@@ -43,7 +31,7 @@ const createKvm = async (kvm) => {
 };
 const removeKvm = async (kvm) => {
     try {
-        const response = await apigee.delete(`/v1/organizations/${ORG}/environments/${ENV}/keyvaluemaps/${kvm}`);
+        const response = await apigee.delete(`/v1/organizations/${ORG}/environments/${CUR_ENV}/keyvaluemaps/${kvm}`);
         window.location.href = window.location.href;
         return response.data;
     } catch (error) {
@@ -55,7 +43,7 @@ const removeKvm = async (kvm) => {
 const listEntriesKvms = async (kvm) => {
     try {
         const response = await apigee.get(
-            `/v1/organizations/${ORG}/environments/${ENV}/keyvaluemaps/${kvm}/entries`
+            `/v1/organizations/${ORG}/environments/${CUR_ENV}/keyvaluemaps/${kvm}/entries`
         );
         return response.data.keyValueEntries;
     } catch (error) {
@@ -66,7 +54,7 @@ const createEntry = async (kvm, name, value) => {
     try {
         console.log(kvm, name, value);
         const body = { name: name, value: value };
-        const response = await apigee.post(`/v1/organizations/${ORG}/environments/${ENV}/keyvaluemaps/${kvm}/entries`, body);
+        const response = await apigee.post(`/v1/organizations/${ORG}/environments/${CUR_ENV}/keyvaluemaps/${kvm}/entries`, body);
         window.location.href = window.location.href;
         return response.data;
     } catch (error) {
@@ -75,7 +63,7 @@ const createEntry = async (kvm, name, value) => {
 };
 const removeEntry = async (kvm, entry) => {
     try {
-        const response = await apigee.delete(`/v1/organizations/${ORG}/environments/${ENV}/keyvaluemaps/${kvm}/entries/${entry}`);
+        const response = await apigee.delete(`/v1/organizations/${ORG}/environments/${CUR_ENV}/keyvaluemaps/${kvm}/entries/${entry}`);
         window.location.href = window.location.href;
         return response.data;
     } catch (error) {
@@ -160,4 +148,41 @@ function addKvm() {
 function deleteKvm() {
     const kvm = prompt("Confirm KVM name (This action can't be undone):");
     removeKvm(kvm);
+}
+
+function selectEnv(env) {
+    CUR_ENV = env;
+    renderHomePage();
+}
+
+// Utils
+const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+
+// Init homepage
+async function init() {
+    const response = await fetch("config.json");
+    const configs = await response.json();
+
+    ORG = configs.ORG;
+    ENVS = configs.ENVS;
+    CUR_ENV = ENVS[0];
+    TOKEN = configs.TOKEN;
+
+    apigee = axios.create({
+        baseURL: "https://apigee.googleapis.com",
+        timeout: 2000,
+        headers: { Authorization: `Bearer ${TOKEN}` },
+    });
+
+    // Populate envs combo box
+    let envComboBox = document.getElementById("env-select");
+    let envs = await ENVS;
+    envs.forEach((env) => {        
+        let option = document.createElement("option");
+        option.text = env;
+        option.value = env;
+        envComboBox.appendChild(option);
+    });
+
+    renderHomePage();
 }

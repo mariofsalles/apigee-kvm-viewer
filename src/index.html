@@ -6,9 +6,13 @@
     <link rel="stylesheet" href="style.css" />
   </head>
 
-  <body onload="renderHomePage()" class="body">
+  <body onload="init()" class="body">
     <!-------------------------- Placeholders --------------------------->
     <h2>Apigee KVM GUI</h2>
+    <div>
+      <select id="env-select" onchange="selectEnv(this.value)">
+    </select>
+    </div>
     <div id="list-view"></div>
     <div id="content-view">
       <div id="table-view"></div>

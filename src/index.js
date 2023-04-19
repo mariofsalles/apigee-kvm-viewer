@@ -93,6 +93,7 @@ async function renderHomePage() {
 }
 async function getEntriesKvm(kvm) {
     document.getElementById("list-view").style.display = "none";
+    document.getElementById("env-select").style.display = "none";
 
     const entryList = await listEntriesKvms(kvm);
     console.log(entryList);
@@ -122,7 +123,7 @@ async function getEntriesKvm(kvm) {
 
     const deleteEntryBtn = document.getElementById("delete-entry-kvm-btn");
     deleteEntryBtn.addEventListener("click", () => {
-        const entry = prompt("Confirm Entry name (This action can't be undone):");
+        const entry = prompt("Confirm entry key (This action can't be undone):");
         removeEntry(kvm, entry);
     })
 
@@ -139,7 +140,11 @@ function cancelEntryKvm() {
     document.getElementById("popup").style.display = "none";
 }
 function returnHomePage() {
-    window.location.href = window.location.href;
+    document.getElementById("list-view").style.display = "flex";
+    document.getElementById("env-select").style.display = "block";
+    document.getElementById("popup").style.display = "none";
+    document.getElementById("table-view").style.display = "none";
+
 }
 function addKvm() {
     const kvm = prompt("KVM name:");
@@ -151,6 +156,7 @@ function deleteKvm() {
 }
 
 function selectEnv(env) {
+    console.log(env);
     CUR_ENV = env;
     renderHomePage();
 }
@@ -165,7 +171,7 @@ async function init() {
 
     ORG = configs.ORG;
     ENVS = configs.ENVS;
-    CUR_ENV = ENVS[0];
+    CUR_ENV = CUR_ENV === undefined ? ENVS[0] : CUR_ENV;
     TOKEN = configs.TOKEN;
 
     apigee = axios.create({

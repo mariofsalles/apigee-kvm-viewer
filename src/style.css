@@ -125,6 +125,8 @@ textarea {
     border-bottom: 1px solid #ccd6e0;
     padding: 12px;
     color: #485b6f;
+    max-width: 48em !important;
+    overflow: auto;
 }
 
 #kvm-entries-table tr:hover {

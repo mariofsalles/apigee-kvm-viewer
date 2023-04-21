@@ -3,6 +3,17 @@ var ORG, ENVS, CUR_ENV, TOKEN;
 var apigee = undefined;
 
 // KVM operations
+const listEnvironments = async () => {
+    try {
+        const response = await apigee.get(`/v1/organizations/${ORG}/environments`);
+        let envs = response.data;
+        console.log(envs)
+        return envs;
+    } catch (error) {
+        console.log(error);
+        alert('Error: Missing or invalid token')
+    }
+};
 const listKvms = async () => {
     try {
         const response = await apigee.get(`/v1/organizations/${ORG}/environments/${CUR_ENV}/keyvaluemaps`);
@@ -169,8 +180,6 @@ async function init() {
     const configs = await response.json();
 
     ORG = configs.ORG;
-    ENVS = configs.ENVS;
-    CUR_ENV = CUR_ENV === undefined ? ENVS[0] : CUR_ENV;
     TOKEN = configs.TOKEN;
 
     apigee = axios.create({
@@ -179,10 +188,12 @@ async function init() {
         headers: { Authorization: `Bearer ${TOKEN}` },
     });
 
+    ENVS = await listEnvironments();
+    CUR_ENV = CUR_ENV === undefined ? ENVS[0] : CUR_ENV;
+
     // Populate envs combo box
     let envComboBox = document.getElementById("env-select");
-    let envs = await ENVS;
-    envs.forEach((env) => {        
+    ENVS.forEach((env) => {        
         let option = document.createElement("option");
         option.text = env;
         option.value = env;

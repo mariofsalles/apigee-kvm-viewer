@@ -7,10 +7,10 @@ This is a very simple graphic tool, developed to simplify the visualization and 
 ```
 npm install
 ```
-2. Set /src/config.json file with your project information
+2. Set your project information on ***/src/config.json***
 ```
 {
-    "ORG": "apigee-org",
+    "ORG": "your-apigee-org",
     "ENVS": ["eval"],
     "TOKEN": "YOUR_GCP_TOKEN"
 }
@@ -19,4 +19,4 @@ npm install
 ```
 npm start 
 ```
-Now, you should be able to use the graphic interface for kvms.
+Now you should be able to use the graphic interface for kvms.

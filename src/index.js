@@ -165,7 +165,7 @@ const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
 // Init homepage
 async function init() {
-    const response = await fetch("../config.json");
+    const response = await fetch("config.json");
     const configs = await response.json();
 
     ORG = configs.ORG;

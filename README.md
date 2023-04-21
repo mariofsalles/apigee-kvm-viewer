@@ -3,10 +3,20 @@
 This is a very simple graphic tool, developed to simplify the visualization and management of Apigee X KVMs.
 
 ## Usage
-To use the tool you only have to set following paramters in index.js:
+1. Install the dependencies
 ```
-const ORG = ""
-const ENV = ""
-const TOKEN = ""
+npm install
 ```
-Now, open the index.html file and you should be to use the graphic interface for kvms.
+2. Set your project information on ***/src/config.json***
+```
+{
+    "ORG": "your-apigee-org",
+    "ENVS": ["eval"],
+    "TOKEN": "YOUR_GCP_TOKEN"
+}
+```
+3. Finally, run the 'start' command
+```
+npm start 
+```
+Now you should be able to use the graphic interface for kvms.

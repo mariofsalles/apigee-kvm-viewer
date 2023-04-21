@@ -96,7 +96,6 @@ async function getEntriesKvm(kvm) {
     document.getElementById("env-select").style.display = "none";
 
     const entryList = await listEntriesKvms(kvm);
-    console.log(entryList);
 
     // Compile the table template
     const templateSource = document.getElementById("table-template").innerHTML;
@@ -166,7 +165,7 @@ const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
 // Init homepage
 async function init() {
-    const response = await fetch("config.json");
+    const response = await fetch("../config.json");
     const configs = await response.json();
 
     ORG = configs.ORG;

@@ -1,0 +1,22 @@
+{
+  "name": "apigee-kvm-viewer",
+  "version": "1.0.0",
+  "description": "GUI for management of Apigee X kvms",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/brunoselistre/apigee-kvm-viewer.git"
+  },
+  "author": "bselistre",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/brunoselistre/apigee-kvm-viewer/issues"
+  },
+  "homepage": "https://github.com/brunoselistre/apigee-kvm-viewer#readme",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}

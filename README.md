@@ -15,8 +15,11 @@ npm install
     "TOKEN": "YOUR_GCP_TOKEN"
 }
 ```
-3. Finally, run the 'start' command
+3. Run the 'start' command
 ```
 npm start 
 ```
-Now you should be able to use the graphic interface for kvms.
+
+4. On your browser go to 'localhost:8000' and you should be able to use the graphic interface for kvms.
+
+***Note:** The port (8000) can be changed on 'app.js'*

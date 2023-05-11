@@ -138,7 +138,7 @@ async function getEntriesKvm(kvm) {
     })
 
 
-    const exportEntriesBtn = document.getElementById("delete-entry-kvm-btn");
+    const exportEntriesBtn = document.getElementById("export-json-btn");
     exportEntriesBtn.addEventListener("click", () => {
         const jsonString = JSON.stringify(entryList);
         const blob = new Blob([jsonString], { type: 'application/json' });

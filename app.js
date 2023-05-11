@@ -3,6 +3,8 @@ const app = express();
 
 app.use(express.static('src'));
 
-app.listen(8000, () => {
+const PORT = 8000;
+
+app.listen(PORT, () => {
   console.log('Server running on port 8000');
 });

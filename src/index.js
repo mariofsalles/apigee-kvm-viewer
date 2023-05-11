@@ -137,6 +137,20 @@ async function getEntriesKvm(kvm) {
         removeEntry(kvm, entry);
     })
 
+
+    const exportEntriesBtn = document.getElementById("delete-entry-kvm-btn");
+    exportEntriesBtn.addEventListener("click", () => {
+        const jsonString = JSON.stringify(entryList);
+        const blob = new Blob([jsonString], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = `${kvm}_${CUR_ENV}`;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    })
+
 }
 function addEntryKvmPopup() {
     document.getElementById("list-view").style.display = "none";

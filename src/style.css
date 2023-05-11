@@ -151,6 +151,7 @@ textarea {
     padding: 0;
 }
 
+#export-json-btn,
 #add-entry-btn {
     height: 90%;
     padding: 10px;

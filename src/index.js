@@ -56,7 +56,10 @@ const listEntriesKvms = async (kvm) => {
         const response = await apigee.get(
             `/v1/organizations/${ORG}/environments/${CUR_ENV}/keyvaluemaps/${kvm}/entries`
         );
-        return response.data.keyValueEntries;
+                // Sort the list alphabetically 
+            const sortedList = sortByAlphabetical(response.data.keyValueEntries, 'name');
+
+            return sortedList;
     } catch (error) {
         console.error(error);
     }
@@ -187,6 +190,11 @@ function selectEnv(env) {
 
 // Utils
 const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+
+// Generic function to sort the list alphabetically based on a specified attribute
+const sortByAlphabetical = (list, attribute) => {
+    return list.sort((a, b) => a[attribute].localeCompare(b[attribute]));
+};
 
 // Init homepage
 async function init() {

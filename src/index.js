@@ -28,21 +28,57 @@ const jsonArrayRegex = /^\[\s*\{\s*"name"\s*:\s*"[^"]+"\s*,\s*"value"\s*:\s*(\d+
 // Inicialização
 //==============================
 document.addEventListener("DOMContentLoaded", async () => {
-  const configs = await loadConfig();
-  ORG = configs.ORG;
-  TOKEN = configs.TOKEN;
+  ORG = localStorage.getItem("org");
+  TOKEN = localStorage.getItem("token");
 
   apigee = createApigeeClient(TOKEN);
-
   state.ENVS = await listEnvironments();
+  if(ORG) {
+    document.getElementById("organization").value = ORG;
+  }
+
+  if(state.ENVS.length > 0) {
+    document.getElementById("main").style = "display: block;"
+    document.getElementById("config-form").style = "display: none;"
+  }
+
   resetSelection();
 
   document.getElementById("add-kvm-btn").addEventListener("click", handleAddKvm);
 });
 
+
 //==============================
 // Funções Utilitárias
 //==============================
+
+// Store org & token  
+async function submitConfig() {
+  // Get form elements
+  var organizationInput = document.getElementById('organization');
+  var tokenInput = document.getElementById('token');
+
+  // Get values from form inputs
+  var organization = organizationInput.value;
+  var token = tokenInput.value;
+  
+  localStorage.setItem("org", organization);
+  localStorage.setItem("token", token);
+
+  document.getElementById("main").style = "display: block;"
+  document.getElementById("config-form").style = "display: none;"
+
+  let envs = await listEnvironments();
+  if(envs) {
+    window.location.reload()
+  }
+
+}
+
+async function logout() {
+  localStorage.removeItem("token");
+  window.location.reload()
+}
 function createApigeeClient(token) {
   return axios.create({
     baseURL: "https://apigee.googleapis.com",
@@ -51,10 +87,12 @@ function createApigeeClient(token) {
   });
 }
 
+/** DEPRECATED
 async function loadConfig() {
   const response = await fetch("config.json");
   return response.json();
 }
+ */
 
 function clearViews() {
   document.getElementById("env-view").innerHTML = "";
@@ -152,7 +190,6 @@ async function listEnvironments() {
     return response.data;
   } catch (error) {
     console.error(error);
-    alert("Error: Missing or invalid token");
     return [];
   }
 }

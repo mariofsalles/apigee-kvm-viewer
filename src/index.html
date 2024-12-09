@@ -5,6 +5,13 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Apigee KVM Viewer</title>
+  <button class="logout-button" style="border: none; background: none; display: flex;align-items: center;position: fixed;top: 2%;right: 2%;" onclick="logout()"> 
+    <?xml version="1.0" ?><svg height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M5.002 21h14c1.103 0 2-.897 2-2V5c0-1.103-.897-2-2-2h-14c-1.103 0-2 .897-2 2v6.001H10V7l6 5-6 5v-3.999H3.002V19c0 1.103.897 2 2 2z"/></svg>
+  </button>
+  <div class="logo" style="margin-top: 2%;margin-bottom: 2%; display: flex;flex-direction: column;align-items: center;">
+    <img src="/assets/img/logo-kvm.png" alt="Logo" style="width: 150px; height: auto;">
+  </div>
+
   <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet"
     crossorigin="anonymous" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
@@ -17,12 +24,20 @@
 </head>
 
 <body class="bg-light">
-  <div class="container my-4">
-    <h2 class="text-center mb-4">Apigee KVM GUI</h2>
+
+  <div id="config-form" class="form" style="display: flex;flex-direction: column;align-items: center;">
+    <input type="text" id="organization" name="organization" placeholder="Organization">
+    <input type="text" id="token" name="token" placeholder="Token">
+    <button type="submit" onclick="submitConfig()">Submit</button>
+  </div>
+
+  <div id="main" class="container my-4" style="display: none;">
 
     <!-- Breadcrumb -->
     <nav aria-label="breadcrumb" class="mb-3">
+      
       <h5><span id="breadcrumb-path"></span></h5>
+
     </nav>
 
     <div class="row">

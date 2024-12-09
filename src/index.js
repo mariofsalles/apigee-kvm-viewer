@@ -297,11 +297,15 @@ function handleAddKvm() {
 }
 
 function toggleEnvSelection(envName, itemElement) {
+  const kvmContainer = document.getElementById("kvm-container");
+
   if (state.selectedEnv === envName) {
     state.selectedEnv = null;
     state.CUR_ENV = null;
     itemElement.classList.remove("active");
     clearKvmAndTable();
+
+    kvmContainer.style.display = "none";
   } else {
     const oldSelected = document.querySelector(".env-item.active");
     if (oldSelected) oldSelected.classList.remove("active");
@@ -311,6 +315,8 @@ function toggleEnvSelection(envName, itemElement) {
     state.kvmPage = 0;
     state.selectedKvm = null;
     renderHomePage();
+
+    kvmContainer.style.display = "block";
   }
   updateBreadcrumb();
 }
@@ -342,7 +348,27 @@ async function getEntriesKvm(kvm) {
   state.entryPage = 0;
   renderEntriesTable();
   createTopLine();
+
+  const switchInput = document.getElementById("flexSwitchCheckDefault");
+  const nameInput = document.getElementById("top-name");
+  const valueInput = document.getElementById("top-value");
+
+  if (switchInput && nameInput && valueInput) {
+    switchInput.addEventListener("change", function () {
+      if (switchInput.checked) {
+        nameInput.placeholder = "Add JSON Array";
+        valueInput.placeholder = "";
+        valueInput.hidden = true;
+        valueInput.value = "";
+      } else {
+        nameInput.placeholder = "Type Name";
+        valueInput.placeholder = "Type Value";
+        valueInput.hidden = false;
+      }
+    });
+  }
 }
+
 
 function prevEnvPage() {
   if (canGoPrev(state.envPage)) {
@@ -400,7 +426,7 @@ function createTopLine() {
   inputDiv.className = "d-flex align-items-center ms-2";
   inputDiv.style.width = "94%";
 
-  const nameInput = createInput("top-name", "Enter Name or JSON Array");
+  const nameInput = createInput("top-name", "Enter Name");
   const valueInput = createInput("top-value", "Enter Value");
   inputDiv.appendChild(nameInput);
   inputDiv.appendChild(valueInput);
@@ -512,14 +538,14 @@ function removeKvmLine(event) {
 //==============================
 function exportToJSON() {
   const table = document.getElementById('kvm-entries-table');
-  const rows = table.querySelectorAll('tbody tr'); 
+  const rows = table.querySelectorAll('tbody tr');
 
   const entries = [];
   rows.forEach(row => {
-    const cells = row.querySelectorAll('td'); 
+    const cells = row.querySelectorAll('td');
     const entry = {
-      name: cells[0]?.innerText.trim(), 
-      value: cells[1]?.innerText.trim() 
+      name: cells[0]?.innerText.trim(),
+      value: cells[1]?.innerText.trim()
     };
     entries.push(entry);
   });

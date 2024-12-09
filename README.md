@@ -7,15 +7,8 @@ This is a very simple graphic tool, developed to simplify the visualization and 
 ```
 npm install
 ```
-2. Set your project information on ***/src/config.json***
-```
-{
-    "ORG": "your-apigee-org",
-    "ENVS": ["eval"],
-    "TOKEN": "YOUR_GCP_TOKEN"
-}
-```
-3. Run the 'start' command
+
+2. Run the 'start' command
 ```
 npm start 
 ```

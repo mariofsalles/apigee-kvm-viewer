@@ -10,7 +10,7 @@
     onclick="logout()">
     <i class="fas fa-sign-out-alt" style="font-size: 24px;"></i>
   </button>
-  <div class="logo" style="margin-top: 2%;margin-bottom: 2%; display: flex;flex-direction: column;align-items: center;">
+  <div id="logo" class="logo" style="margin-top: 2%;margin-bottom: 2%; display: flex;flex-direction: column;align-items: center;">
     <img src="/assets/img/logo-kvm.png" alt="Logo" style="width: 150px; height: auto;">
   </div>
 
@@ -96,6 +96,10 @@
 
   <!-- Template da lista de KVMs com paginação e botão único de delete -->
   <script id="kvm-list-template" type="text/x-handlebars-template">
+    <div class="input-group mb-2">
+      <input type="text" id="new-kvm-name" class="form-control" placeholder="New KVM" />
+      <button id="add-kvm-btn" class="btn btn-primary">Add KVM</button>
+    </div>
     {{#each items}}
       <div class="list-group-item d-flex align-items-center kvm-item" data-kvm-name="{{name}}">
         <span class="kvm-name" title="{{name}}">{{name}}</span>
@@ -113,10 +117,7 @@
     </div>
     {{/if}}
 
-    <div class="input-group mt-5">
-      <input type="text" id="new-kvm-name" class="form-control" placeholder="New KVM" />
-      <button id="add-kvm-btn" class="btn btn-primary">Add KVM</button>
-    </div>
+
 
     <div class="mt-3 d-flex justify-content-begin">
       <button class="btn btn-danger w-100" id="delete-active-kvm-btn" onclick="deleteActiveKvm()" disabled>Delete KVM</button>
@@ -128,16 +129,18 @@
     <div class="p-4 border bg-white rounded">
 
       <div class="mb-3">
-        <div class="d-flex justify-content-end align-items-center mb-4" style="width: 100%;">                  
+
+
+        <div class="d-flex align-items-start form-check form-switch mb-3 column-gap-4">
+          <span>
+            <input id="flexSwitchCheckDefault" class="form-check-input" type="checkbox" role="switch">
+            <label class="form-check-label" for="flexSwitchCheckDefault">JSON</label>
+          </span>
+
           <button id="export-json-btn" class="btn p-0 border-0 bg-transparent" style="color: grey;" 
             title="Export to JSON" onclick="exportToJSON();">
-            <i class="fas fa-solid fa-download fa-2x"></i>
+            <i class="fas fa-solid fa-download fa-1x"></i>
           </button>
-        </div>
-
-        <div class="form-check form-switch mb-3">
-          <input id="flexSwitchCheckDefault" class="form-check-input" type="checkbox" role="switch">
-          <label class="form-check-label" for="flexSwitchCheckDefault">JSON</label>
         </div>
         
         <div id="entries-container" style="display: flex; flex-direction: column; width: 100%;">
@@ -149,19 +152,19 @@
             </div>
       
             <div class="d-flex align-items-center ms-2" style="width: 94%;">
-              <input type="text" id="top-name" class="form-control me-2" placeholder="Enter Name" style="max-width: 100%;" />
-              <input type="text" id="top-value" class="form-control" placeholder="Enter Value" style="max-width: 100%;" />
+              <input type="text" id="top-name" class="form-control me-2" placeholder="Key" style="max-width: 100%;" />
+              <input type="text" id="top-value" class="form-control" placeholder="Value" style="max-width: 100%;" />
             </div>
       
             <div class="d-flex justify-content-end ms-2" style="width: 3%;">
-              <button class="btn p-0 border-0 bg-transparent" onclick="pushKvmPair();" title="Add Name/Value Pair">
+              <button class="btn p-0 border-0 bg-transparent" onclick="pushKvmPair();" title="Stage entry">
                 <i class="fas fa-plus size-1-5-x"></i>
               </button>
             </div>
           </div>
         </div>
       
-        <div class="d-flex justify-content-end mt-3" style="width: 100%;">
+        <div class="d-flex flex-column" style="width: 100%;">
           <button id="add-entry-btn" class="btn btn-primary" onclick="addEntry();">Add Pairs</button>
         </div>
       </div>
@@ -169,7 +172,7 @@
       <table id="kvm-entries-table" class="table table-hover mt-3 ms-2 me-2">
         <thead>
           <tr>
-            <th style="width: 25%;">Name</th>
+            <th style="width: 25%;">Key</th>
             <th style="width: 60%;">Value</th>
             <th style="width: 15%;"></th>
           </tr>
@@ -177,8 +180,8 @@
         <tbody>
           {{#each items}}
             <tr>
-              <td style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap; max-width: 200px;" title="{{name}}">{{name}}</td>
-              <td style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap; max-width: 400px;" title="{{value}}">{{value}}</td>
+              <td style="overflow: auto; white-space: nowrap; max-width: 200px;" title="{{name}}">{{name}}</td>
+              <td style="overflow: auto; white-space: nowrap; max-width: 400px;" title="{{value}}">{{value}}</td>
               <td style="text-align: center; color:red"><button class="btn p-0 border-0 bg-transparent" onclick="deleteEntry('{{id}}');"><i class="fas fa-trash-alt"></i></button></td>
             </tr>
           {{/each}}

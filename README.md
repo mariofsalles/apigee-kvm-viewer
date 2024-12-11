@@ -13,6 +13,6 @@ npm install
 npm start 
 ```
 
-4. On your browser go to 'localhost:8000' and you should be able to use the graphic interface for kvms.
+3. On your browser go to 'localhost:8000' and you should be able to use the graphic interface for kvms.
 
 ***Note:** The port (8000) can be changed on 'app.js'*

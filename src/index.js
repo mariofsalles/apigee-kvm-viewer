@@ -27,6 +27,8 @@ const jsonArrayRegex = /^\[\s*\{\s*"name"\s*:\s*"[^"]+"\s*,\s*"value"\s*:\s*(\d+
 //==============================
 // Inicialização
 //==============================
+
+
 document.addEventListener("DOMContentLoaded", async () => {
   ORG = localStorage.getItem("org");
   TOKEN = localStorage.getItem("token");
@@ -42,6 +44,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (state.ENVS.length > 0) {
       document.getElementById("main").classList.remove("d-none");
       document.getElementById("config-form").classList.add("d-none");
+      document.getElementById("logo").classList.add("d-none");
     }
 
     resetSelection();
@@ -71,6 +74,7 @@ async function submitConfig() {
 
   document.getElementById("main").classList.remove("d-none");
   document.getElementById("config-form").classList.add("d-none");
+  document.getElementById("logo").classList.add("d-none");
 
   let envs = await listEnvironments();
   if (envs) {
@@ -419,8 +423,8 @@ async function getEntriesKvm(kvm) {
         valueInput.hidden = true;
         valueInput.value = "";
       } else {
-        nameInput.placeholder = "Type Name";
-        valueInput.placeholder = "Type Value";
+        nameInput.placeholder = "Key";
+        valueInput.placeholder = "Value";
         valueInput.hidden = false;
       }
     });
@@ -483,8 +487,8 @@ function createTopLine() {
   inputDiv.className = "d-flex align-items-center ms-2";
   inputDiv.style.width = "94%";
 
-  const nameInput = createInput("top-name", "Enter Name");
-  const valueInput = createInput("top-value", "Enter Value");
+  const nameInput = createInput("top-name", "Key");
+  const valueInput = createInput("top-value", "Value");
   inputDiv.appendChild(nameInput);
   inputDiv.appendChild(valueInput);
 
@@ -495,7 +499,7 @@ function createTopLine() {
   const plusBtn = document.createElement("button");
   plusBtn.className = "btn p-0 border-0 bg-transparent";
   plusBtn.style.color = "green";
-  plusBtn.title = "Add Name/Value Pair";
+  plusBtn.title = "Stage entries";
   plusBtn.innerHTML = '<i class="fas fa-plus"></i>';
   plusBtn.onclick = pushKvmPair;
 
@@ -648,7 +652,7 @@ window.deleteEntry = async function (entryKey) {
   const kvm = (state.selectedKvm || "").trim();
   if (!kvm) return alert("No KVM selected.");
 
-  if (confirm(`Are you sure you want to delete entry: ${entryKey}? This action cannot be undone.`)) {
+  if (confirm(`Are you sure you want to delete entry: ${entryKey}? \nThis action cannot be undone.`)) {
     await apigee.delete(
       `/v1/organizations/${ORG}/environments/${state.CUR_ENV}/keyvaluemaps/${encodeURIComponent(kvm)}/entries/${encodeURIComponent(entryKey)}`
     );

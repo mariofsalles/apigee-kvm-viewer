@@ -5,8 +5,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Apigee KVM Viewer</title>
-  <button class="logout-button" style="border: none; background: none; display: flex;align-items: center;position: fixed;top: 2%;right: 2%;" onclick="logout()"> 
-    <?xml version="1.0" ?><svg height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M5.002 21h14c1.103 0 2-.897 2-2V5c0-1.103-.897-2-2-2h-14c-1.103 0-2 .897-2 2v6.001H10V7l6 5-6 5v-3.999H3.002V19c0 1.103.897 2 2 2z"/></svg>
+  <button class="logout-button"
+    style="border: none; background: none; display: flex; align-items: center; position: fixed; top: 2%; right: 2%; cursor: pointer;"
+    onclick="logout()">
+    <i class="fas fa-sign-out-alt" style="font-size: 24px;"></i>
   </button>
   <div class="logo" style="margin-top: 2%;margin-bottom: 2%; display: flex;flex-direction: column;align-items: center;">
     <img src="/assets/img/logo-kvm.png" alt="Logo" style="width: 150px; height: auto;">
@@ -25,19 +27,25 @@
 
 <body class="bg-light">
 
-  <div id="config-form" class="form" style="display: flex;flex-direction: column;align-items: center;">
-    <input type="text" id="organization" name="organization" placeholder="Organization">
-    <input type="text" id="token" name="token" placeholder="Token">
-    <button type="submit" onclick="submitConfig()">Submit</button>
+  <!-- Formulário de Configuração -->
+  <div id="config-form" class="container d-flex flex-column align-items-center mt-5">
+    <form class="w-25">
+      <div class="mb-2">
+        <input type="text" id="organization" name="organization" class="form-control" placeholder="Organization"
+          required>
+      </div>
+      <div class="mb-2">
+        <input type="text" id="token" name="token" class="form-control" placeholder="Token" required>
+      </div>
+      <button type="button" class="btn btn-primary w-100" onclick="submitConfig()">Submit</button>
+    </form>
   </div>
 
-  <div id="main" class="container my-4" style="display: none;">
-
+  <!-- Conteúdo Principal -->
+  <div id="main" class="container my-4 d-none">
     <!-- Breadcrumb -->
     <nav aria-label="breadcrumb" class="mb-3">
-      
-      <h5><span id="breadcrumb-path"></span></h5>
-
+      <p id="breadcrumb-path" style="color: grey; font-style: italic;"></p>
     </nav>
 
     <div class="row">
@@ -48,10 +56,6 @@
 
       <!-- Coluna de KVMs -->
       <div id="kvm-container" class="col-md-3 mt-3" style="display: none;">
-        <div class="input-group mb-3">
-          <input type="text" id="new-kvm-name" class="form-control" placeholder="New KVM" />
-          <button id="add-kvm-btn" class="btn btn-primary">Add KVM</button>
-        </div>
         <div id="kvm-view" class="list-group"></div>
       </div>
 
@@ -109,14 +113,19 @@
     </div>
     {{/if}}
 
+    <div class="input-group mt-5">
+      <input type="text" id="new-kvm-name" class="form-control" placeholder="New KVM" />
+      <button id="add-kvm-btn" class="btn btn-primary">Add KVM</button>
+    </div>
+
     <div class="mt-3 d-flex justify-content-begin">
-      <button class="btn btn-danger" id="delete-active-kvm-btn" onclick="deleteActiveKvm()" disabled>Delete KVM</button>
+      <button class="btn btn-danger w-100" id="delete-active-kvm-btn" onclick="deleteActiveKvm()" disabled>Delete KVM</button>
     </div>
   </script>
 
   <!-- Template da tabela de entradas com paginação -->
-  <script id="table-template" type="text/x-handlebars-template">    
-    <div class="p-4 border bg-white rounded shadow-sm">
+  <script id="table-template" type="text/x-handlebars-template">
+    <div class="p-4 border bg-white rounded">
 
       <div class="mb-3">
         <div class="d-flex justify-content-end align-items-center mb-4" style="width: 100%;">                  
@@ -146,7 +155,7 @@
       
             <div class="d-flex justify-content-end ms-2" style="width: 3%;">
               <button class="btn p-0 border-0 bg-transparent" onclick="pushKvmPair();" title="Add Name/Value Pair">
-                <i class="fas fa-plus fa-2x"></i>
+                <i class="fas fa-plus size-1-5-x"></i>
               </button>
             </div>
           </div>
@@ -181,7 +190,7 @@
         <button {{#if prevDisabled}}disabled{{/if}} onclick="prevEntryPage()" style="background:none; border:none; padding:0; cursor:pointer;">
           <i class="fas fa-chevron-left size-1-5-x"></i>
         </button>
-        <button {{#if nextDisabled}}disabled{{/if}} onclick="nextEntryPage()" style="background:none; border:none; padding:0; cursor:pointer;">
+        <button {{#if nextDisabled}}disabled{{/if}} onclick="nextEntryPage()" class="pagination-next" style="background:none; border:none; padding:0; cursor:pointer;">
           <i class="fas fa-chevron-right size-1-5-x"></i>
         </button>
       </div>

@@ -235,7 +235,7 @@ async function listEntriesKvms(kvm) {
     );
     return response.data.keyValueEntries
       .sort((a, b) => a.name.localeCompare(b.name))
-      .map((e) => ({ ...e, id: e.name }));
+      .map((e) => ({ ...e }));
   } catch (error) {
     console.error(error);
     return [];
